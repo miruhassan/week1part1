@@ -46,8 +46,9 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding-top: 40px;
 }
 
 input[type="text"] {
@@ -71,4 +72,70 @@ button {
 
 button:hover {
   background-color: #b20710;
+}
+
+ul.list {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+li {
+  background-color: #1c1c1c;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li.completed .movie-title {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.movie-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  flex-grow: 1;
+  text-align: left;
+  margin-right: 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.icon-button {
+  background-color: #e50914;
+  border: none;
+  color: white;
+  padding: 6px;
+  border-radius: 5px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+}
+
+.icon-button i {
+  font-size: 12px;
+}
+
+.icon-button:hover {
+  background-color: #b20710;
+}
+
+.edit-mode input[type="text"] {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  margin-right: 8px;
 }
