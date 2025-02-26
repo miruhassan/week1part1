@@ -6,6 +6,10 @@ import Movies from "./components/Movies";
 import Cart from "./components/Cart";
 import About from "./components/About";
 import "./App.css";
+import NowPlaying from "./components/NowPlaying";
+import SearchResults from "./components/SearchResults";
+
+
 
 function App() {
   return (
@@ -17,6 +21,10 @@ function App() {
           <Route path="/movies" element={<Movies />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/about" element={<About />} />
+          <Route path="/nowplaying" element={<NowPlaying />} />
+          <Route path="/searchresults" element={<SearchResults />} />
+
+
         </Routes>
       </div>
     </Router>

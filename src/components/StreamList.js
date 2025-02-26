@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const StreamList = () => {
   const [list, setList] = useState([]);
@@ -6,38 +6,63 @@ const StreamList = () => {
   const [editIndex, setEditIndex] = useState(null);
   const [editInput, setEditInput] = useState("");
 
+  useEffect(() => {
+    const savedList = localStorage.getItem("streamList");
+    if (savedList) setList(JSON.parse(savedList));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("streamList", JSON.stringify(list));
+  }, [list]);
+
   const addToList = () => {
     if (input.trim() !== "") {
-      setList([...list, { text: input, completed: false }]);
+      const newItem = { text: input, completed: false, addedAt: new Date().toISOString() };
+      setList([...list, newItem]);
       setInput("");
+      saveEvent("add", newItem);
     }
   };
 
   const deleteItem = (index) => {
+    saveEvent("delete", list[index]);
     setList(list.filter((_, i) => i !== index));
   };
 
   const toggleComplete = (index) => {
-    setList(
-      list.map((item, i) =>
-        i === index ? { ...item, completed: !item.completed } : item
-      )
-    );
+    const updatedItem = {
+      ...list[index],
+      completed: !list[index].completed,
+      completedAt: !list[index].completed ? new Date().toISOString() : null,
+    };
+    setList(list.map((item, i) => (i === index ? updatedItem : item)));
+    saveEvent("toggleComplete", updatedItem);
   };
 
   const startEdit = (index) => {
     setEditIndex(index);
     setEditInput(list[index].text);
+    saveEvent("startEdit", list[index]);
   };
 
   const saveEdit = (index) => {
     if (editInput.trim() !== "") {
-      setList(
-        list.map((item, i) => (i === index ? { ...item, text: editInput } : item))
-      );
+      const updatedItem = { ...list[index], text: editInput, editedAt: new Date().toISOString() };
+      setList(list.map((item, i) => (i === index ? updatedItem : item)));
       setEditIndex(null);
       setEditInput("");
+      saveEvent("saveEdit", updatedItem);
     }
+  };
+
+  const saveEvent = (action, item) => {
+    const events = JSON.parse(localStorage.getItem("streamListEvents")) || [];
+    const newEvent = {
+      action,
+      item,
+      timestamp: new Date().toISOString(),
+    };
+    localStorage.setItem("streamListEvents", JSON.stringify([newEvent, ...events].slice(0, 20)));
   };
 
   return (
