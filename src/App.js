@@ -9,8 +9,6 @@ import "./App.css";
 import NowPlaying from "./components/NowPlaying";
 import SearchResults from "./components/SearchResults";
 
-
-
 function App() {
   return (
     <Router>
@@ -23,8 +21,6 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/nowplaying" element={<NowPlaying />} />
           <Route path="/searchresults" element={<SearchResults />} />
-
-
         </Routes>
       </div>
     </Router>
